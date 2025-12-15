@@ -1,3 +1,5 @@
+import { avatarHandler } from "../../apis/http";
+
 Page({
   data: {
     avatarUrl: "",
@@ -25,7 +27,7 @@ Page({
     }
   },
 
-  onAddHat() {
+  async onAddHat() {
     const { STATUS } = this;
     if (this.data.status === STATUS.NONE) {
       wx.showToast({ title: "请先选择头像", icon: "none" });
@@ -36,6 +38,11 @@ Page({
     this.setStatus(STATUS.GENERATING);
 
     // TODO: 在此处替换为真实的圣诞帽生成逻辑（耗时操作）
+    const result = await avatarHandler({
+      avatarUrl: this.data.avatarUrl,
+    });
+    console.log(result);
+
     this.hatTimer = setTimeout(() => {
       this.setStatus(STATUS.GENERATED);
     }, 1000);
