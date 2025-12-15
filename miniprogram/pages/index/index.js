@@ -4,6 +4,7 @@ Page({
     defaultAvatar: "https://dummyimage.com/200x200/ededed/999999&text=Avatar",
     hasAvatar: false,
     hatAdded: false,
+    hatLoading: false,
   },
   
   onChooseAvatar(e) {
@@ -13,13 +14,26 @@ Page({
         avatarUrl,
         hasAvatar: true,
         hatAdded: false,
+        hatLoading: false,
       });
     }
   },
 
   onAddHat() {
-    // TODO: 在此处添加圣诞帽生成逻辑
-    this.setData({ hatAdded: true });
+    if (this.data.hatLoading) return;
+
+    this.setData({
+      hatLoading: true,
+      hatAdded: false,
+    });
+
+    // TODO: 在此处替换为真实的圣诞帽生成逻辑（耗时操作）
+    this.hatTimer = setTimeout(() => {
+      this.setData({
+        hatLoading: false,
+        hatAdded: true,
+      });
+    }, 3000);
   },
 
   onDownload() {
@@ -32,5 +46,12 @@ Page({
       title: "画个圣诞帽",
       path: "/pages/index/index",
     };
+  },
+
+  onUnload() {
+    if (this.hatTimer) {
+      clearTimeout(this.hatTimer);
+      this.hatTimer = null;
+    }
   },
 });

@@ -43,6 +43,7 @@ page {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .avatar_img {
@@ -79,6 +80,40 @@ page {
   background: #fff;
   color: #ff4c68;
   border: 2rpx solid #ff7f50;
+}
+
+.loading_mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  color: #fff;
+}
+
+.loading_spinner {
+  width: 48rpx;
+  height: 48rpx;
+  border: 6rpx solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading_text {
+  font-size: 24rpx;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .avatar_tip {

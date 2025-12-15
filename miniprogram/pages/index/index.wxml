@@ -6,6 +6,12 @@
   <view class="avatar_card">
     <view class="avatar_preview">
       <image class="avatar_img" src="{{avatarUrl || defaultAvatar}}" mode="aspectFill"></image>
+      <block wx:if="{{hatLoading}}">
+        <view class="loading_mask">
+          <view class="loading_spinner"></view>
+          <text class="loading_text">生成圣诞帽中...</text>
+        </view>
+      </block>
     </view>
     <view class="avatar_actions">
       <block wx:if="{{!hasAvatar}}">
@@ -14,7 +20,9 @@
         </button>
       </block>
       <block wx:if="{{hasAvatar && !hatAdded}}">
-        <button class="avatar_btn avatar_btn--primary" bindtap="onAddHat">添加圣诞帽</button>
+        <button class="avatar_btn avatar_btn--primary" bindtap="onAddHat" loading="{{hatLoading}}" disabled="{{hatLoading}}">
+          {{hatLoading ? "生成中..." : "添加圣诞帽"}}
+        </button>
       </block>
       <block wx:if="{{hatAdded}}">
         <button class="avatar_btn avatar_btn--primary" bindtap="onDownload">下载头像</button>
