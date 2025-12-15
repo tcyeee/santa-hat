@@ -7,8 +7,19 @@
     <view class="avatar_preview">
       <image class="avatar_img" src="{{avatarUrl || defaultAvatar}}" mode="aspectFill"></image>
     </view>
-    <button class="avatar_btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
-      选择头像
-    </button>
+    <view class="avatar_actions">
+      <block wx:if="{{!hasAvatar}}">
+        <button class="avatar_btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+          选择头像
+        </button>
+      </block>
+      <block wx:if="{{hasAvatar && !hatAdded}}">
+        <button class="avatar_btn avatar_btn--primary" bindtap="onAddHat">添加圣诞帽</button>
+      </block>
+      <block wx:if="{{hatAdded}}">
+        <button class="avatar_btn avatar_btn--primary" bindtap="onDownload">下载头像</button>
+        <button class="avatar_btn avatar_btn--ghost" open-type="share">转发头像</button>
+      </block>
+    </view>
   </view>
 </view>

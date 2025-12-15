@@ -70,6 +70,17 @@ page {
   opacity: 0.9;
 }
 
+.avatar_btn--primary {
+  background: linear-gradient(90deg, #ff7f50, #ff4c68);
+  color: #fff;
+}
+
+.avatar_btn--ghost {
+  background: #fff;
+  color: #ff4c68;
+  border: 2rpx solid #ff7f50;
+}
+
 .avatar_tip {
   color: #999;
   font-size: 24rpx;
