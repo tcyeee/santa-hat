@@ -1,4 +1,5 @@
 import { avatarHandler } from "../../apis/http";
+import { readFileAsBase64 } from "../../utils";
 
 Page({
   data: {
@@ -17,14 +18,11 @@ Page({
   setStatus(status, extra = {}) {
     this.setData({ status, ...extra });
   },
-  
+
   onChooseAvatar(e) {
     const { avatarUrl } = e.detail || {};
-    if (avatarUrl) {
-      this.setStatus(this.STATUS.HAS_AVATAR, {
-        avatarUrl,
-      });
-    }
+    if (!avatarUrl) return;
+    this.setStatus(this.STATUS.HAS_AVATAR, { avatarUrl });
   },
 
   async onAddHat() {
@@ -35,17 +33,21 @@ Page({
     }
     if (this.data.status === STATUS.GENERATING) return;
 
-    this.setStatus(STATUS.GENERATING);
+    this.setStatus(this.STATUS.GENERATING);
 
-    // TODO: 在此处替换为真实的圣诞帽生成逻辑（耗时操作）
-    const result = await avatarHandler({
-      avatarUrl: this.data.avatarUrl,
-    });
-    console.log(result);
-
-    this.hatTimer = setTimeout(() => {
-      this.setStatus(STATUS.GENERATED);
-    }, 1000);
+    try {
+      const avatarFileBase64 = await readFileAsBase64(this.data.avatarUrl);
+      const result = await avatarHandler({
+        avatarFile: avatarFileBase64,
+      });
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+      wx.showToast({ title: "生成失败，请重试", icon: "none" });
+      this.setStatus(this.STATUS.HAS_AVATAR);
+      return;
+    }
+    this.setStatus(this.STATUS.GENERATED);
   },
 
   onDownload() {
@@ -98,18 +100,7 @@ Page({
     };
   },
 
-  onUnload() {
-    if (this.hatTimer) {
-      clearTimeout(this.hatTimer);
-      this.hatTimer = null;
-    }
-  },
-
   onRestart() {
-    if (this.hatTimer) {
-      clearTimeout(this.hatTimer);
-      this.hatTimer = null;
-    }
     this.setStatus(this.STATUS.NONE, { avatarUrl: "" });
   },
 });
