@@ -1,0 +1,14 @@
+<!-- index.wxml -->
+<view class="container">
+  <view class="title">画个圣诞帽</view>
+  <view class="top_tip">点击一键为你的头像添加圣诞帽</view>
+  <!-- 用户卡片 -->
+  <view class="avatar_card">
+    <view class="avatar_preview">
+      <image class="avatar_img" src="{{avatarUrl || defaultAvatar}}" mode="aspectFill"></image>
+    </view>
+    <button class="avatar_btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+      选择头像
+    </button>
+  </view>
+</view>

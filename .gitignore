@@ -1,0 +1,27 @@
+project.private.config.json
+
+# macOS / OS
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# Node dependencies
+node_modules/
+miniprogram/node_modules/
+miniprogram/miniprogram_npm/
+cloudfunctions/**/node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# WeChat DevTools temp files
+miniprogram/.tea/
+miniprogram/.temp/
+

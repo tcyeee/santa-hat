@@ -1,0 +1,76 @@
+/**index.wxss**/
+
+page {
+  padding-top: 54rpx;
+  background-color: #f6f6f6;
+  padding-bottom: 60rpx;
+}
+
+.container {
+  font-family: PingFang SC;
+}
+
+.title {
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: #000000;
+  font-size: 44rpx;
+  margin-bottom: 40rpx;
+}
+
+.top_tip {
+  font-size: 28rpx;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: #888888;
+  margin-bottom: 28rpx;
+}
+
+.avatar_card {
+  margin-top: 15vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32rpx;
+}
+
+.avatar_preview {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  background: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar_img {
+  width: 100%;
+  height: 100%;
+}
+
+.avatar_actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.avatar_btn {
+  background: linear-gradient(90deg, #ff7f50, #ff4c68);
+  color: #fff;
+  border: none;
+  border-radius: 999rpx;
+  padding: 20rpx 40rpx;
+  font-size: 28rpx;
+  line-height: 1;
+}
+
+.avatar_btn:active {
+  opacity: 0.9;
+}
+
+.avatar_tip {
+  color: #999;
+  font-size: 24rpx;
+}
