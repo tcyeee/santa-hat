@@ -2,51 +2,58 @@ Page({
   data: {
     avatarUrl: "",
     defaultAvatar: "https://dummyimage.com/200x200/ededed/999999&text=Avatar",
-    hasAvatar: false,
-    hatAdded: false,
-    hatLoading: false,
+    status: "NONE",
+  },
+
+  STATUS: {
+    NONE: "NONE",
+    HAS_AVATAR: "HAS_AVATAR",
+    GENERATING: "GENERATING",
+    GENERATED: "GENERATED",
+  },
+
+  setStatus(status, extra = {}) {
+    this.setData({ status, ...extra });
   },
   
   onChooseAvatar(e) {
     const { avatarUrl } = e.detail || {};
     if (avatarUrl) {
-      this.setData({
+      this.setStatus(this.STATUS.HAS_AVATAR, {
         avatarUrl,
-        hasAvatar: true,
-        hatAdded: false,
-        hatLoading: false,
       });
     }
   },
 
   onAddHat() {
-    if (this.data.hatLoading) return;
-
-    this.setData({
-      hatLoading: true,
-      hatAdded: false,
-    });
-
-    // TODO: 在此处替换为真实的圣诞帽生成逻辑（耗时操作）
-    this.hatTimer = setTimeout(() => {
-      this.setData({
-        hatLoading: false,
-        hatAdded: true,
-      });
-    }, 3000);
-  },
-
-  onDownload() {
-    const { avatarUrl, hatAdded, hatLoading } = this.data;
-    if (!avatarUrl) {
+    const { STATUS } = this;
+    if (this.data.status === STATUS.NONE) {
       wx.showToast({ title: "请先选择头像", icon: "none" });
       return;
     }
-    if (hatLoading) {
+    if (this.data.status === STATUS.GENERATING) return;
+
+    this.setStatus(STATUS.GENERATING);
+
+    // TODO: 在此处替换为真实的圣诞帽生成逻辑（耗时操作）
+    this.hatTimer = setTimeout(() => {
+      this.setStatus(STATUS.GENERATED);
+    }, 1000);
+  },
+
+  onDownload() {
+    const { avatarUrl, status } = this.data;
+    const { STATUS } = this;
+
+    if (!avatarUrl || status === STATUS.NONE) {
+      wx.showToast({ title: "请先选择头像", icon: "none" });
+      return;
+    }
+    if (status === STATUS.GENERATING) {
       wx.showToast({ title: "生成中，请稍候", icon: "none" });
       return;
     }
-    if (!hatAdded) {
+    if (status !== STATUS.GENERATED) {
       wx.showToast({ title: "请先添加圣诞帽", icon: "none" });
       return;
     }
@@ -78,8 +85,9 @@ Page({
 
   onShareAppMessage() {
     return {
-      title: "画个圣诞帽",
-      path: "/pages/index/index",
+      title: "快看我的圣诞帽头像",
+      path: "/pages/index/index?from=share",
+      imageUrl: this.data.avatarUrl || this.data.defaultAvatar, // 如果已上传到云/CDN
     };
   },
 
