@@ -27,6 +27,7 @@
       <block wx:if="{{status === 'GENERATED'}}">
         <button class="avatar_btn avatar_btn--primary" bindtap="onDownload">下载头像</button>
         <button class="avatar_btn avatar_btn--ghost" open-type="share">转发头像</button>
+        <button class="avatar_btn avatar_btn--ghost" bindtap="onRestart">重新开始</button>
       </block>
     </view>
   </view>

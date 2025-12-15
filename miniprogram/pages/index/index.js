@@ -97,4 +97,12 @@ Page({
       this.hatTimer = null;
     }
   },
+
+  onRestart() {
+    if (this.hatTimer) {
+      clearTimeout(this.hatTimer);
+      this.hatTimer = null;
+    }
+    this.setStatus(this.STATUS.NONE, { avatarUrl: "" });
+  },
 });
