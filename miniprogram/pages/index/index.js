@@ -37,8 +37,43 @@ Page({
   },
 
   onDownload() {
-    // TODO: 替换为实际下载逻辑
-    wx.showToast({ title: "下载中...", icon: "none" });
+    const { avatarUrl, hatAdded, hatLoading } = this.data;
+    if (!avatarUrl) {
+      wx.showToast({ title: "请先选择头像", icon: "none" });
+      return;
+    }
+    if (hatLoading) {
+      wx.showToast({ title: "生成中，请稍候", icon: "none" });
+      return;
+    }
+    if (!hatAdded) {
+      wx.showToast({ title: "请先添加圣诞帽", icon: "none" });
+      return;
+    }
+
+    wx.showLoading({ title: "保存中..." });
+    wx.getImageInfo({
+      src: avatarUrl,
+      success: (info) => {
+        wx.saveImageToPhotosAlbum({
+          filePath: info.path,
+          success: () => {
+            wx.showToast({ title: "已保存到相册", icon: "success" });
+          },
+          fail: (err) => {
+            const msg = err?.errMsg?.includes("auth deny")
+              ? "请在设置中允许保存到相册"
+              : "保存失败，请重试";
+            wx.showToast({ title: msg, icon: "none" });
+          },
+          complete: () => wx.hideLoading(),
+        });
+      },
+      fail: () => {
+        wx.hideLoading();
+        wx.showToast({ title: "图片获取失败", icon: "none" });
+      },
+    });
   },
 
   onShareAppMessage() {
