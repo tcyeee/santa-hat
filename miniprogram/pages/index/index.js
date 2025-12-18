@@ -38,9 +38,10 @@ Page({
     try {
       const avatarFileBase64 = await imageToBase64(this.data.avatarUrl);
       const result = await avatarHandler({ avatar: avatarFileBase64 });
-      const resultImageUrl = result.data.output.choices[0].message.content[0].image
+      const resultImageUrl =
+        result.data.output.choices[0].message.content[0].image;
       console.log(resultImageUrl);
-      this.setData({avatarUrl: resultImageUrl});
+      this.setData({ avatarUrl: resultImageUrl });
     } catch (error) {
       console.error(error);
       wx.showToast({ title: "生成失败，请重试", icon: "none" });
@@ -72,7 +73,8 @@ Page({
       .then((filePath) => {
         wx.saveImageToPhotosAlbum({
           filePath,
-          success: () => wx.showToast({ title: "已保存到相册", icon: "success" }),
+          success: () =>
+            wx.showToast({ title: "已保存到相册", icon: "success" }),
           fail: (err) => {
             const msg = err?.errMsg?.includes("auth deny")
               ? "请在设置中允许保存到相册"
@@ -89,10 +91,18 @@ Page({
   },
 
   onShareAppMessage() {
+    if (this.data.status !== this.STATUS.GENERATED) {
+      return {
+        title: "一键生成圣诞帽头像",
+        path: "/pages/index/index?from=share_menu",
+        imageUrl: "https://i.tcyeee.top/apps/santa/banner.png?v=1.0",
+      };
+    }
+
     return {
       title: "快看我的圣诞帽头像",
       path: "/pages/index/index?from=share",
-      imageUrl: this.data.avatarUrl || this.data.defaultAvatar, // 如果已上传到云/CDN
+      imageUrl: this.data.avatarUrl || this.data.defaultAvatar,
     };
   },
 
