@@ -90,6 +90,30 @@ Page({
       });
   },
 
+  toLocalFile(src) {
+    return new Promise((resolve, reject) => {
+      if (!src) return reject(new Error("empty src"));
+
+      // 已是本地路径
+      if (!/^https?:\/\//.test(src)) {
+        resolve(src);
+        return;
+      }
+
+      wx.downloadFile({
+        url: src,
+        success: (res) => {
+          if (res.statusCode === 200 && res.tempFilePath) {
+            resolve(res.tempFilePath);
+          } else {
+            reject(new Error(`download failed: ${res.statusCode}`));
+          }
+        },
+        fail: reject,
+      });
+    });
+  },
+
   onShareAppMessage() {
     if (this.data.status !== this.STATUS.GENERATED) {
       return {
@@ -108,29 +132,5 @@ Page({
 
   onRestart() {
     this.setStatus(this.STATUS.NONE, { avatarUrl: "" });
-  },
-
-  toLocalFile(src) {
-    return new Promise((resolve, reject) => {
-      if (!src) return reject(new Error("empty src"));
-
-      // 已是本地/临时文件，直接返回
-      if (!/^https?:\/\//.test(src)) {
-        return resolve(src);
-      }
-
-      // 远程 http(s) 需先下载到本地后再保存，兼容手机端相册权限
-      wx.downloadFile({
-        url: src,
-        success: (res) => {
-          if (res.tempFilePath) {
-            resolve(res.tempFilePath);
-          } else {
-            reject(new Error("download no tempFilePath"));
-          }
-        },
-        fail: reject,
-      });
-    });
   },
 });

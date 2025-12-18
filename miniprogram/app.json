@@ -9,6 +9,11 @@
     "navigationBarTitleText": "云开发 QuickStart",
     "navigationBarTextStyle": "black"
   },
+  "permission": {
+    "scope.writePhotosAlbum": {
+      "desc": "用于保存图片到相册"
+    }
+  },
   "sitemapLocation": "sitemap.json",
   "style": "v2",
   "lazyCodeLoading": "requiredComponents"
