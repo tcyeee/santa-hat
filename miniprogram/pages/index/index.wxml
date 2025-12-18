@@ -20,9 +20,13 @@
         </button>
       </block>
       <block wx:if="{{status === 'HAS_AVATAR'}}">
-        <button class="avatar_btn avatar_btn--primary" bindtap="onAddHat" loading="{{status === 'GENERATING'}}" disabled="{{status === 'GENERATING'}}">
-          {{status === 'GENERATING' ? "生成中..." : "添加圣诞帽"}}
+        <button class="avatar_btn avatar_btn--primary" bindtap="onAddHat">添加圣诞帽</button>
+      </block>
+      <block wx:if="{{status === 'GENERATING'}}">
+        <button class="avatar_btn avatar_btn--primary" loading="true" disabled="true">
+          生成中...
         </button>
+        <text class="loading_subtext">需要耗时15秒左右, 请耐心等待</text>
       </block>
       <block wx:if="{{status === 'GENERATED'}}">
         <button class="avatar_btn avatar_btn--primary" bindtap="onDownload">下载头像</button>

@@ -107,6 +107,26 @@ page {
   font-size: 24rpx;
 }
 
+.loading_subtext {
+  margin-top: -6rpx;
+  text-align: center;
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.6);
+  animation: pulseColor 1.2s ease-in-out infinite;
+}
+
+@keyframes pulseColor {
+  0% {
+    color: rgba(255, 255, 255, 0.55);
+  }
+  50% {
+    color: rgba(255, 255, 255, 0.9);
+  }
+  100% {
+    color: rgba(255, 255, 255, 0.55);
+  }
+}
+
 @keyframes spin {
   from {
     transform: rotate(0deg);
