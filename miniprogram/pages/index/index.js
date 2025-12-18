@@ -68,14 +68,11 @@ Page({
     }
 
     wx.showLoading({ title: "保存中..." });
-    wx.getImageInfo({
-      src: avatarUrl,
-      success: (info) => {
+    this.toLocalFile(avatarUrl)
+      .then((filePath) => {
         wx.saveImageToPhotosAlbum({
-          filePath: info.path,
-          success: () => {
-            wx.showToast({ title: "已保存到相册", icon: "success" });
-          },
+          filePath,
+          success: () => wx.showToast({ title: "已保存到相册", icon: "success" }),
           fail: (err) => {
             const msg = err?.errMsg?.includes("auth deny")
               ? "请在设置中允许保存到相册"
@@ -84,12 +81,11 @@ Page({
           },
           complete: () => wx.hideLoading(),
         });
-      },
-      fail: () => {
+      })
+      .catch(() => {
         wx.hideLoading();
         wx.showToast({ title: "图片获取失败", icon: "none" });
-      },
-    });
+      });
   },
 
   onShareAppMessage() {
@@ -102,5 +98,29 @@ Page({
 
   onRestart() {
     this.setStatus(this.STATUS.NONE, { avatarUrl: "" });
+  },
+
+  toLocalFile(src) {
+    return new Promise((resolve, reject) => {
+      if (!src) return reject(new Error("empty src"));
+
+      // 已是本地/临时文件，直接返回
+      if (!/^https?:\/\//.test(src)) {
+        return resolve(src);
+      }
+
+      // 远程 http(s) 需先下载到本地后再保存，兼容手机端相册权限
+      wx.downloadFile({
+        url: src,
+        success: (res) => {
+          if (res.tempFilePath) {
+            resolve(res.tempFilePath);
+          } else {
+            reject(new Error("download no tempFilePath"));
+          }
+        },
+        fail: reject,
+      });
+    });
   },
 });
