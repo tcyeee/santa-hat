@@ -1,3 +1,17 @@
+![](/public/banner.zh.png)
+
+<p align="center">
+	<img src="https://img.shields.io/badge/📩-tcyeee@outlook.com-red">
+	<!-- last commit -->
+	<img src="https://img.shields.io/github/last-commit/tcyeee/santa-hat">
+	<!-- license -->
+	<img src="https://img.shields.io/github/license/tcyeee/santa-hat">
+	<!-- stars -->
+	<img src="https://img.shields.io/github/stars/tcyeee/santa-hat">
+</p>
+
+<div align="center">中文 ｜ <a href="../README.md">English</a></div>
+
 # 🎄 画个圣诞帽
 
 「画个圣诞帽」是一款轻量有趣的微信小程序，可一键为头像戴上圣诞帽。无需登录、无需复杂配置，打开即用，快速营造节日氛围。

@@ -1,3 +1,17 @@
+![](/public/banner.png)
+
+<p align="center">
+	<img src="https://img.shields.io/badge/📩-tcyeee@outlook.com-red">
+	<!-- last commit -->
+	<img src="https://img.shields.io/github/last-commit/tcyeee/santa-hat">
+	<!-- license -->
+	<img src="https://img.shields.io/github/license/tcyeee/santa-hat">
+	<!-- stars -->
+	<img src="https://img.shields.io/github/stars/tcyeee/santa-hat">
+</p>
+
+<div align="center"><a href="i18n/README.zh.md">中文</a> ｜ English</div>
+
 # 🎄 Draw a Santa Hat
 
 “Draw a Santa Hat” is a lightweight, playful WeChat Mini Program that puts a Santa hat on your avatar in one tap. No login, no setup—open and enjoy the holiday vibe instantly.
