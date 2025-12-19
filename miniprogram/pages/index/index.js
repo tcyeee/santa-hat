@@ -74,6 +74,7 @@ Page({
           success: () =>
             wx.showToast({ title: "已保存到相册", icon: "success" }),
           fail: (err) => {
+            console.error(err);
             const msg = err?.errMsg?.includes("auth deny")
               ? "请在设置中允许保存到相册"
               : "保存失败，请重试";
