@@ -68,6 +68,7 @@ Page({
 
     wx.showLoading({ title: "保存中..." });
     this.toLocalFile(avatarUrl)
+      .then((filePath) => this.normalizeImagePath(filePath))
       .then((filePath) => {
         wx.saveImageToPhotosAlbum({
           filePath,
@@ -109,6 +110,17 @@ Page({
           }
         },
         fail: reject,
+      });
+    });
+  },
+
+  // iOS 端保存相册需先通过 getImageInfo 获取有效的本地路径
+  normalizeImagePath(filePath) {
+    return new Promise((resolve) => {
+      wx.getImageInfo({
+        src: filePath,
+        success: (res) => resolve(res.path || filePath),
+        fail: () => resolve(filePath),
       });
     });
   },
