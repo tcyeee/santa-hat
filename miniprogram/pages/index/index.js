@@ -70,6 +70,7 @@ Page({
     this.toLocalFile(avatarUrl)
       .then((filePath) => this.normalizeImagePath(filePath))
       .then((filePath) => {
+
         wx.saveImageToPhotosAlbum({
           filePath,
           success: () =>
@@ -83,6 +84,7 @@ Page({
           },
           complete: () => wx.hideLoading(),
         });
+
       })
       .catch(() => {
         wx.hideLoading();
