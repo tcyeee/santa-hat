@@ -6,33 +6,35 @@ App({
     this.checkForUpdate();
   },
 
-  checkForUpdate() {
-    if (!wx.canIUse || !wx.canIUse("getUpdateManager"))       return;
+checkForUpdate() {
+  if (!wx.canIUse("getUpdateManager")) return;
 
-    const updateManager = wx.getUpdateManager();
+  const updateManager = wx.getUpdateManager();
 
-    updateManager.onCheckForUpdate(() => {
-      // 仅在有新版本时处理提示与更新
+  updateManager.onCheckForUpdate((res) => {
+    console.log("check update:", res.hasUpdate);
+  });
+
+  updateManager.onUpdateReady(() => {
+    console.log("update ready");
+    wx.showModal({
+      title: "更新提示",
+      content: "新版本已准备好，是否重启应用？",
+      success: (res) => {
+        if (res.confirm) {
+          updateManager.applyUpdate();
+        }
+      },
     });
+  });
 
-    updateManager.onUpdateReady(() => {
-      wx.showModal({
-        title: "更新提示",
-        content: "检测到新版本，是否重启并应用更新？",
-        success: (res) => {
-          if (res.confirm) {
-            updateManager.applyUpdate();
-          }
-        },
-      });
+  updateManager.onUpdateFailed(() => {
+    console.error("update failed");
+    wx.showModal({
+      title: "更新失败",
+      content: "新版本下载失败，请稍后再试",
+      showCancel: false,
     });
-
-    updateManager.onUpdateFailed(() => {
-      wx.showModal({
-        title: "更新失败",
-        content: "新版本下载失败，请稍后重试",
-        showCancel: false,
-      });
-    });
-  },
+  });
+}
 });
