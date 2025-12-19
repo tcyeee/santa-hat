@@ -1,25 +1,35 @@
 # 🎄 Draw a Santa Hat
 
-“Draw a Santa Hat” is a lightweight, fun WeChat Mini Program that fetches your avatar and overlays a Santa hat with one tap. No login or complex setup—just open and enjoy the holiday vibe.
+“Draw a Santa Hat” is a lightweight, playful WeChat Mini Program that puts a Santa hat on your avatar in one tap. No login, no setup—open and enjoy the holiday vibe instantly.
 
 ## ✨ Features
 
-Core capabilities:
-- Fetch the user’s WeChat avatar (with permission)
-- Overlay a Santa hat image on the avatar automatically
-- Preview the result in real time
-- Save the generated avatar to the local album
+![](/public/15.png)
 
-❗ No social, upload, sharing, or account system is included. No personal data is collected.
+Core capabilities:
+- Fetch your WeChat avatar (with permission)
+- Auto overlay a Santa hat
+- Real-time preview
+- One-tap save to local album
+
+❗ No social, no uploads, no account system, and no personal data collection.
 
 ## 🧩 How to Use
-1. Open the “Draw a Santa Hat” Mini Program
-2. Grant avatar access
-3. Tap “Add Santa Hat”
-4. Preview and save the avatar
+
+![](/public/qr_code.png)
+
+1. Scan the QR above or search “Draw a Santa Hat” in WeChat
+2. Pick an avatar and tap generate
+3. Preview and save the result
+
+## ⚠️ Notes
+
+The algorithm may occasionally produce surprising results
+
+![](/public/2.png)
 
 ## 🔐 Privacy
-- Avatar processing happens only on local Canvas
+- Avatar processing happens only on the local Canvas
 - No uploads to any server
 - No storage, analysis, or sharing of user data
 - No phone number or login required
