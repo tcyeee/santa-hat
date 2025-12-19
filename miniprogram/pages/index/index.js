@@ -37,11 +37,9 @@ Page({
 
     try {
       const avatarFileBase64 = await imageToBase64(this.data.avatarUrl);
-      const result = await avatarHandler({ avatar: avatarFileBase64 });
-      const resultImageUrl =
-        result.data.output.choices[0].message.content[0].image;
-      console.log(resultImageUrl);
-      this.setData({ avatarUrl: resultImageUrl });
+      const res = await avatarHandler({ avatar: avatarFileBase64 });
+      console.log(`[DEBUG]获取到头像地址: ${res.data}`);
+      this.setData({ avatarUrl: res.data });
     } catch (error) {
       console.error(error);
       wx.showToast({ title: "生成失败，请重试", icon: "none" });
