@@ -18,7 +18,7 @@
 
 ## ✨ Features
 
-![](/public/15.png)
+![](/public/3.png)
 
 Core capabilities:
 - Fetch your WeChat avatar (with permission)
