@@ -16,9 +16,9 @@
     <view class="avatar_actions">
       <block wx:if="{{status === 'NONE'}}">
         <button class="avatar_btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
-          选择头像
+          选择头像(缩略图)
         </button>
-        <button class="avatar_btn avatar_btn--ghost" bindtap="onUploadImage">上传本地图片</button>
+        <button class="avatar_btn avatar_btn--ghost" bindtap="onUploadImage">上传图片(高清)</button>
       </block>
       <block wx:if="{{status === 'HAS_AVATAR'}}">
         <button class="avatar_btn avatar_btn--primary" bindtap="onAddHat">添加圣诞帽</button>

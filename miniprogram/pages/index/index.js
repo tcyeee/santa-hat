@@ -25,20 +25,70 @@ Page({
     this.setStatus(this.STATUS.HAS_AVATAR, { avatarUrl });
   },
 
-  onUploadImage() {
-    wx.chooseImage({
-      count: 1,
-      sizeType: ["original"],
-      sourceType: ["album", "camera"],
-      success: (res) => {
-        const filePath = res.tempFilePaths?.[0];
-        if (!filePath) return;
-        this.setStatus(this.STATUS.HAS_AVATAR, { avatarUrl: filePath });
-      },
-      fail: (err) => {
-        if (err?.errMsg?.includes("cancel")) return;
-        wx.showToast({ title: "选择图片失败", icon: "none" });
-      },
+  async onUploadImage() {
+    try {
+      // 1. 选择图片
+      const { tempFilePaths } = await this.chooseImage();
+      const filePath = tempFilePaths[0];
+
+      // 2. 上传图片
+      const fileID = await this.uploadImage(filePath);
+
+      // 3. 获取在线地址
+      const avatarUrl = await this.getImageURL(fileID);
+
+      // 4. 更新状态
+      this.setStatus(this.STATUS.HAS_AVATAR, { avatarUrl });
+    } catch (err) {
+      if (err?.errMsg?.includes("cancel")) return;
+      console.error(err);
+      wx.showToast({ title: "图片上传失败", icon: "none" });
+    }
+  },
+
+  chooseImage() {
+    return new Promise((resolve, reject) => {
+      wx.chooseImage({
+        count: 1,
+        sizeType: ["original"],
+        sourceType: ["album", "camera"],
+        success: resolve,
+        fail: reject,
+      });
+    });
+  },
+
+  uploadImage(filePath) {
+    return new Promise((resolve, reject) => {
+      wx.cloud.uploadFile({
+        cloudPath: `avatar/${Date.now()}.png`,
+        filePath,
+        success(res) {
+          if (!res.fileID) {
+            reject(new Error("No fileID returned"));
+            return;
+          }
+          resolve(res.fileID);
+        },
+        fail: reject,
+      });
+    });
+  },
+
+  getImageURL(fileID) {
+    return new Promise((resolve, reject) => {
+      wx.cloud.getTempFileURL({
+        fileList: [fileID],
+        success(res) {
+          const url = res.fileList?.[0]?.tempFileURL;
+          if (!url) {
+            reject(new Error("No tempFileURL returned"));
+            return;
+          }
+          resolve(url);
+        },
+        fail: reject,
+      });
     });
   },
 
@@ -53,8 +103,7 @@ Page({
     this.setStatus(this.STATUS.GENERATING);
 
     try {
-      const avatarFileBase64 = await imageToBase64(this.data.avatarUrl);
-      const res = await avatarHandler({ avatar: avatarFileBase64 });
+      const res = await avatarHandler({ avatar: this.data.avatarUrl });
       console.log(`[DEBUG]获取到头像地址: ${res.data}`);
       this.setData({ avatarUrl: res.data });
     } catch (error) {
@@ -87,7 +136,6 @@ Page({
     this.toLocalFile(avatarUrl)
       .then((filePath) => this.normalizeImagePath(filePath))
       .then((filePath) => {
-
         wx.saveImageToPhotosAlbum({
           filePath,
           success: () =>
@@ -101,7 +149,6 @@ Page({
           },
           complete: () => wx.hideLoading(),
         });
-
       })
       .catch(() => {
         wx.hideLoading();
