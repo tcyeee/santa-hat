@@ -5,3 +5,13 @@
 3. 使用url在阿里千问生成图片临时url
 4. 下载临时url图片
 5. 保存到腾讯OSS
+
+#### 环境配置项
+
+| 名称              | 说明               |
+| ----------------- | ------------------ |
+| DASHSCOPE_API_KEY | 阿里云API_KEY      |
+| DASHSCOPE_URL     | 阿里云大模型地址   |
+| PIC_PROMPT        | 阿里云大模型提示词 |
+| CLOUD_ENV         | 腾讯云ID           |
+
