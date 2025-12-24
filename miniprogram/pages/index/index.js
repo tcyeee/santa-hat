@@ -25,6 +25,23 @@ Page({
     this.setStatus(this.STATUS.HAS_AVATAR, { avatarUrl });
   },
 
+  onUploadImage() {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ["original"],
+      sourceType: ["album", "camera"],
+      success: (res) => {
+        const filePath = res.tempFilePaths?.[0];
+        if (!filePath) return;
+        this.setStatus(this.STATUS.HAS_AVATAR, { avatarUrl: filePath });
+      },
+      fail: (err) => {
+        if (err?.errMsg?.includes("cancel")) return;
+        wx.showToast({ title: "选择图片失败", icon: "none" });
+      },
+    });
+  },
+
   async onAddHat() {
     const { STATUS } = this;
     if (this.data.status === STATUS.NONE) {
