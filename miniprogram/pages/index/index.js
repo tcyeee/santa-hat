@@ -6,6 +6,7 @@ Page({
     avatarUrl: "",
     defaultAvatar: "https://dummyimage.com/200x200/ededed/999999&text=Avatar",
     status: "NONE",
+    uploadLoading: false,
   },
 
   STATUS: {
@@ -26,6 +27,7 @@ Page({
   },
 
   async onUploadImage() {
+    this.setData({ uploadLoading: true });
     try {
       // 1. 选择图片
       const { tempFilePaths } = await this.chooseImage();
@@ -43,6 +45,8 @@ Page({
       if (err?.errMsg?.includes("cancel")) return;
       console.error(err);
       wx.showToast({ title: "图片上传失败", icon: "none" });
+    } finally {
+      this.setData({ uploadLoading: false });
     }
   },
 
