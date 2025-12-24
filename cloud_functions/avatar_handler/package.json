@@ -1,0 +1,15 @@
+{
+  "name": "avatar-handler",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "tcyeee",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test":  "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@cloudbase/node-sdk": "^3.16.0"
+  }
+}
